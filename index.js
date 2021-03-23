@@ -139,7 +139,84 @@ client.on('raw', cargos => {
   let membro = servidor.members.cache.get(cargos.d.user_id);
 
   try{
-    
+    let lol = servidor.roles.cache.get('823588468608204810'),
+    volante = servidor.roles.cache.get('823588519636500490'),
+    wot = servidor.roles.cache.get('823599967352258570'),
+    ror2 = servidor.roles.cache.get('823588414711922690'),
+    mine = servidor.roles.cache.get('823600016177233930'),
+    csgo = servidor.roles.cache.get('823588683718066176'),
+    gta = servidor.roles.cache.get('823634663951695893'),
+    cp = servidor.roles.cache.get('823634704909467669'),
+    cod = servidor.roles.cache.get('823634684957032450'),
+    all = servidor.roles.cache.get('823604394620485682');
+
+
+    if(cargos.t === 'MESSAGE_REACTION_ADD'){
+      if(cargos.d.emoji.id === '823560867555573841') { // LoL
+        if(membro.roles.cache.get(lol))return;
+        membro.roles.add(lol);
+      } else if(cargos.d.emoji.id === '823598117726584919') { // Valorant
+        if(membro.roles.cache.get(volante)) return;
+        membro.roles.add(volante);
+      } else if(cargos.d.emoji.id === '823565363966246942') { // WoT
+        if(membro.roles.cache.get(wot)) return;
+        membro.roles.add(wot);
+      } else if(cargos.d.emoji.id === '823567209061154877') { // RoR2
+        if(membro.roles.cache.get(ror2)) return;
+        membro.roles.add(ror2);
+      } else if(cargos.d.emoji.id === '823566156719194112') { // Mine
+        if(membro.roles.cache.get(mine)) return;
+        membro.roles.add(mine);
+      } else if(cargos.d.emoji.id === '823563230743232533') { //CSGO 
+        if(membro.roles.cache.get(csgo)) return;
+        membro.roles.add(csgo);
+      } else if(cargos.d.emoji.id === '823636942805401630') { // GTAV 
+        if(membro.roles.cache.get(gta)) return;
+        membro.roles.add(gta);
+      } else if(cargos.d.emoji.id === '823636942183727114') { // CyberP
+        if(membro.roles.cache.get(cp)) return;
+        membro.roles.add(cp);
+      } else if(cargos.d.emoji.id === '823636941869416478') { // COD
+        if(membro.roles.cache.get(cod)) return;
+        membro.roles.add(cod);
+      } else if(cargos.d.emoji.name === '🕹️') { // ALL GAMES
+        if(membro.roles.cache.get(all)) return;
+        membro.roles.add(all);
+      }
+    }
+    if(cargos.t === 'MESSAGE_REACTION_REMOVE'){
+      if(cargos.d.emoji.id === '823560867555573841') { // LoL
+        if(membro.roles.cache.get(lol))return;
+        membro.roles.remove(lol);
+      } else if(cargos.d.emoji.id === '823598117726584919') { // Valorant
+        if(membro.roles.cache.get(volante)) return;
+        membro.roles.remove(volante);
+      } else if(cargos.d.emoji.id === '823565363966246942') { // WoT
+        if(membro.roles.cache.get(wot)) return;
+        membro.roles.remove(wot);
+      } else if(cargos.d.emoji.id === '823567209061154877') { // RoR2
+        if(membro.roles.cache.get(ror2)) return;
+        membro.roles.remove(ror2);
+      } else if(cargos.d.emoji.id === '823566156719194112') { // Mine
+        if(membro.roles.cache.get(mine)) return;
+        membro.roles.remove(mine);
+      } else if(cargos.d.emoji.id === '823563230743232533') { //CSGO 
+        if(membro.roles.cache.get(csgo)) return;
+        membro.roles.remove(csgo);
+      } else if(cargos.d.emoji.id === '823636942805401630') { // GTAV 
+        if(membro.roles.cache.get(gta)) return;
+        membro.roles.remove(gta);
+      } else if(cargos.d.emoji.id === '823636942183727114') { // CyberP
+        if(membro.roles.cache.get(cp)) return;
+        membro.roles.remove(cp);
+      } else if(cargos.d.emoji.id === '823636941869416478') { // COD
+        if(membro.roles.cache.get(cod)) return;
+        membro.roles.remove(cod);
+      } else if(cargos.d.emoji.name === '🕹️') { // ALL GAMES
+        if(membro.roles.cache.get(all)) return;
+        membro.roles.remove(all);
+      }
+    }
   } catch (err) {
     console.log('Erro: '+err);
   }
