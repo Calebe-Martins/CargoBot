@@ -130,6 +130,21 @@ client.on('raw', async padrao => {
 
 });
 
+// Monitoramento dos cargos no canal CARGOS
+client.on('raw', cargos => {
+  if(cargos.t !== 'MESSAGE_REACTION_ADD' && cargos.t !== 'MESSAGE_REACTION_REMOVE') return;
+  if(cargos.d.message_id != '823570504103362620') return;
+
+  let servidor = client.guilds.cache.get('440971255831855124');
+  let membro = servidor.members.cache.get(cargos.d.user_id);
+
+  try{
+    
+  } catch (err) {
+    console.log('Erro: '+err);
+  }
+
+});
 
 
 // Monitoramento do chat para o bot responder aos comandos
