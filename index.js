@@ -74,18 +74,22 @@ client.on('guildMemberAdd', member => {
   // Adiciona o cargo ao membros
   try {
 
-    // Separador de cores
+    // Divisão cores
     let roleCores = member.guild.roles.cache.find(role => role.id === '823534110378950697');
     if(!roleCores) console.log('Cargo não existente');
     member.roles.add(roleCores);
 
-    // Separador de cargos
+    // Divisão cargos
     let roleCargos = member.guild.roles.cache.find(role => role.id === '823545589647409182');
     member.roles.add(roleCargos);
 
-    // Cargo padrão
-    let rolePadrao = member.guild.roles.cache.find(role => role.id === '822548974597570604');
-    member.roles.add(rolePadrao);
+    // Divisão Fun
+    let roleFun = member.guild.roles.cache.find(role => role.id === '823620799369183233');
+    member.roles.add(roleFun);
+
+    // Divisão personalizada
+    let rolePers = member.guild.roles.cache.find(role => role.id === '823568181800206376');
+    member.roles.add(rolePers);
     
   } catch (err) {
     console.log("Erro: " + err);
@@ -94,6 +98,39 @@ client.on('guildMemberAdd', member => {
   // Mensagem de Boas Vindas
   channel.send(`Bem vindo ${member}`);
 });
+
+// Define os cargos para os novos padrões de cargo
+client.on('raw', async padrao => {
+
+  if(padrao.t !== 'MESSAGE_REACTION_ADD' && padrao.t !== 'MESSAGE_REACTION_REMOVE') return;
+  if(padrao.d.message_id != '823619420215050260') return;
+
+  let servidor = client.guilds.cache.get('440971255831855124');
+  let membro = servidor.members.cache.get(padrao.d.user_id);
+
+  try{
+    let cargoCor = servidor.roles.cache.get('823534110378950697'),
+      cargoCargo = servidor.roles.cache.get('823545589647409182'),
+      cargoFun = servidor.roles.cache.get('823620799369183233'),
+      cargoPers = servidor.roles.cache.get('823568181800206376');
+      cargoSem = servidor.roles.cache.get('822548974597570604')
+
+    if(padrao.t === 'MESSAGE_REACTION_ADD'){
+      if(padrao.d.emoji.id === '823619289479250001'){
+        membro.roles.add(cargoCor);
+        membro.roles.add(cargoCargo);
+        membro.roles.add(cargoFun);
+        membro.roles.add(cargoPers);
+        membro.roles.remove(cargoSem);
+      }
+    }
+  } catch (err) {
+    console.log ('Erro: '+err);
+  }
+
+});
+
+
 
 // Monitoramento do chat para o bot responder aos comandos
 client.on('message', message => {
