@@ -112,6 +112,7 @@ client.on('raw', async padrao => {
     let cargoCor = servidor.roles.cache.get('823534110378950697'),
       cargoCargo = servidor.roles.cache.get('823545589647409182'),
       cargoFun = servidor.roles.cache.get('823620799369183233'),
+      cargoVida = servidor.roles.cache.get('824011992217026671'),
       cargoPers = servidor.roles.cache.get('823568181800206376');
       cargoSem = servidor.roles.cache.get('822548974597570604')
 
@@ -120,6 +121,7 @@ client.on('raw', async padrao => {
         membro.roles.add(cargoCor);
         membro.roles.add(cargoCargo);
         membro.roles.add(cargoFun);
+        membro.roles.add(cargoVida);
         membro.roles.add(cargoPers);
         membro.roles.remove(cargoSem);
       }
@@ -147,8 +149,8 @@ client.on('raw', cargos => {
     csgo = servidor.roles.cache.get('823588683718066176'),
     gta = servidor.roles.cache.get('823634663951695893'),
     cp = servidor.roles.cache.get('823634704909467669'),
-    cod = servidor.roles.cache.get('823634684957032450'),
-    all = servidor.roles.cache.get('823604394620485682');
+    cod = servidor.roles.cache.get('823634684957032450');
+    //all = servidor.roles.cache.get('823604394620485682');
 
 
     if(cargos.t === 'MESSAGE_REACTION_ADD'){
@@ -179,10 +181,10 @@ client.on('raw', cargos => {
       } else if(cargos.d.emoji.id === '823636941869416478') { // COD
         if(membro.roles.cache.get(cod)) return;
         membro.roles.add(cod);
-      } else if(cargos.d.emoji.name === '🕹️') { // ALL GAMES
+      } /*else if(cargos.d.emoji.name === '🕹️') { // ALL GAMES
         if(membro.roles.cache.get(all)) return;
         membro.roles.add(all);
-      }
+      }*/
     }
     if(cargos.t === 'MESSAGE_REACTION_REMOVE'){
       if(cargos.d.emoji.id === '823560867555573841') { // LoL
@@ -212,10 +214,10 @@ client.on('raw', cargos => {
       } else if(cargos.d.emoji.id === '823636941869416478') { // COD
         if(membro.roles.cache.get(cod)) return;
         membro.roles.remove(cod);
-      } else if(cargos.d.emoji.name === '🕹️') { // ALL GAMES
+      } /*else if(cargos.d.emoji.name === '🕹️') { // ALL GAMES
         if(membro.roles.cache.get(all)) return;
         membro.roles.remove(all);
-      }
+      }*/
     }
   } catch (err) {
     console.log('Erro: '+err);
@@ -223,6 +225,65 @@ client.on('raw', cargos => {
 
 });
 
+// Monitoramento cargo FUN
+client.on('raw', fun => {
+  if(fun.t !== 'MESSAGE_REACTION_ADD' && fun.t !== 'MESSAGE_REACTION_REMOVE') return;
+  if(fun.d.message_id != '823570654456578098') return;
+
+  let servidor = client.guilds.cache.get('440971255831855124');
+  let membro = servidor.members.cache.get(fun.d.user_id);
+
+  try{
+    let conversa = servidor.roles.cache.get('824008544605044796'),
+    meme = servidor.roles.cache.get('823604218576633887'),
+    musica = servidor.roles.cache.get('823604268245188640')
+    twitch = servidor.roles.cache.get('823604266744676432'),
+    cinema = servidor.roles.cache.get('823649605870157865');
+
+    // Adiciona os cargos
+    if(fun.t === 'MESSAGE_REACTION_ADD'){
+      if(fun.d.emoji.name === '💬'){
+        if(membro.roles.cache.get(conversa)) return;
+        membro.roles.add(conversa);
+      } else if (fun.d.emoji.id === '823566520432721950'){
+        if(membro.roles.cache.get(meme)) return;
+        membro.roles.add(meme);
+      } else if(fun.d.emoji.name === '🎵'){
+        if(membro.roles.cache.get(musica)) return;
+        membro.roles.add(musica);
+      } else if(fun.d.emoji.id === '823598628571578400'){
+        if(membro.roles.cache.get(twitch)) return;
+        membro.roles.add(twitch);
+      } else if(fun.d.emoji.name === '️📽️'){
+        if(membro.roles.cache.get(cinema)) return;
+        membro.roles.add(cinema);
+      }
+    }
+
+    // Remove os cargos
+    if(fun.t === 'MESSAGE_REACTION_REMOVE'){
+      if(fun.d.emoji.name === '💬'){
+        if(membro.roles.cache.get(conversa)) return;
+        membro.roles.remove(conversa);
+      } else if (fun.d.emoji.id === '823566520432721950'){
+        if(membro.roles.cache.get(meme)) return;
+        membro.roles.remove(meme);
+      } else if(fun.d.emoji.name === '🎵'){
+        if(membro.roles.cache.get(musica)) return;
+        membro.roles.remove(musica);
+      } else if(fun.d.emoji.id === '823598628571578400'){
+        if(membro.roles.cache.get(twitch)) return;
+        membro.roles.remove(twitch);
+      } else if(fun.d.emoji.name === '️📽️'){
+        if(membro.roles.cache.get(cinema)) return;
+        membro.roles.remove(cinema);
+      }
+    }
+  } catch(err) {
+    console.log('Erro: '+err);
+  }
+
+});
 
 // Monitoramento do chat para o bot responder aos comandos
 client.on('message', message => {
