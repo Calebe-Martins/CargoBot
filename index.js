@@ -87,16 +87,32 @@ client.on('guildMemberAdd', member => {
     let roleFun = member.guild.roles.cache.find(role => role.id === '823620799369183233');
     member.roles.add(roleFun);
 
+    let roleVida = member.guild.roles.cache.find(role => role.id === '824011992217026671');
+    member.roles.add(roleVida);
+
     // Divisão personalizada
     let rolePers = member.guild.roles.cache.find(role => role.id === '823568181800206376');
     member.roles.add(rolePers);
+
+    let semrole = member.guild.roles.cache.find(role => role.id === '822548974597570604');
+    member.roles.add(semrole);
     
   } catch (err) {
     console.log("Erro: " + err);
   }
 
   // Mensagem de Boas Vindas
-  channel.send(`Bem vindo ${member}`);
+  channel.send(`${member.user}`);
+  const embed = new Discord.MessageEmbed()
+    .setColor('#9400D3')
+    .setTitle('👋Bem Vindo(a)')
+    .setAuthor(member.user.tag, member.user.displayAvatarURL())
+    .setThumbnail(member.user.displayAvatarURL())
+    .setDescription(`Olá ${member.user}. Vá para o canal: \n『❗』𝓣𝓾𝓽𝓸𝓻𝓲𝓪𝓵  para acessar nosso servidor`)
+    .setImage('https://media.giphy.com/media/57ZvMMkuBIVMlU88Yh/giphy.gif')
+    .setFooter(`ID do usuário:${member.id} `)
+    .setTimestamp()
+  channel.send(embed);
 });
 
 // Define os cargos para os novos padrões de cargo
@@ -113,6 +129,7 @@ client.on('raw', async padrao => {
       cargoCargo = servidor.roles.cache.get('823545589647409182'),
       cargoFun = servidor.roles.cache.get('823620799369183233'),
       cargoVida = servidor.roles.cache.get('824011992217026671'),
+      cargoSep = servidor.roles.cache.get('825043204180934727'),
       cargoPers = servidor.roles.cache.get('823568181800206376');
       cargoSem = servidor.roles.cache.get('822548974597570604')
 
@@ -122,6 +139,7 @@ client.on('raw', async padrao => {
         membro.roles.add(cargoCargo);
         membro.roles.add(cargoFun);
         membro.roles.add(cargoVida);
+        membro.roles.add(cargoSep);
         membro.roles.add(cargoPers);
         membro.roles.remove(cargoSem);
       }
@@ -285,12 +303,146 @@ client.on('raw', fun => {
 
 });
 
+// Monitoramento do cargo cargo Vida
+client.on('raw', vida => {
+  if(vida.t !== 'MESSAGE_REACTION_ADD' && vida.t !== 'MESSAGE_REACTION_REMOVE') return;
+  if(vida.d.message_id != '825056335271297034') return;
+
+  let servidor = client.guilds.cache.get('440971255831855124');
+  let membro = servidor.members.cache.get(vida.d.user_id);
+
+  try {
+    let gado = servidor.roles.cache.get('824011995811676202'),
+    golpe = servidor.roles.cache.get('824013303201136751');
+
+    if(vida.t === 'MESSAGE_REACTION_ADD'){
+      if(vida.d.emoji.name === '🐮') {
+        if(membro.roles.cache.get(gado)) return;
+        membro.roles.add(gado);
+      } else if(vida.d.emoji.name === '🤡') {
+        if(membro.roles.cache.get(golpe)) return;
+        membro.roles.add(golpe);
+      }
+    }
+
+    if(vida.t === 'MESSAGE_REACTION_REMOVE') {
+      if(vida.d.emoji.name === '🐮') {
+        if(membro.roles.cache.get(gado)) return;
+        membro.roles.remove(gado);
+      } else if(vida.d.emoji.name === '🤡') {
+        if(membro.roles.cache.get(golpe)) return;
+        membro.roles.remove(golpe);
+      }
+    }
+  } catch (err) {
+    console.log('Erro: '+ err);
+  }
+});
+
+// Monitoramento de divisórias de pessoas de 1 a 10
+/*client.on('raw', div => {
+  if(div.t !== 'MESSAGE_REACTION_ADD' && div.t !== 'MESSAGE_REACTION_REMOVE') return;
+  if(div.d.message_id != '825057869497368608') return;
+
+  let servidor = client.guilds.cache.get('440971255831855124');
+  let membro = servidor.members.cache.get(div.d.user_id);
+
+  try {
+    let atoa = servidor.roles.cache.get('825047381556199516'),
+    proplayer = servidor.roles.cache.get('825047355216232468'),
+    noob = servidor.roles.cache.get('825047374379483146'),
+    egirl = servidor.roles.cache.get('825047380738834442'),
+    tiltado = servidor.roles.cache.get('825047375922987095'),
+    sempreon = servidor.roles.cache.get('825047376334028821'),
+    estudante = servidor.roles.cache.get('825047372232130561'),
+    nuncaestou = servidor.roles.cache.get('825047378250825766'),
+    letitgo = servidor.roles.cache.get('825047378250825766'),
+    weee = servidor.roles.cache.get('825047379593527298'),
+    roleplay = servidor.roles.cache.get(''),
+    forfun = servidor.roles.cache.get(''),
+    corno = servidor.roles.cache.get(''),
+    membro = servidor.roles.cache.get('');
+
+    if(vida.t === 'MESSAGE_REACTION_ADD'){
+      if(vida.d.emoji.name === ':one:') {
+        if(membro.roles.cache.get(atoa)) return;
+        membro.roles.add(atoa);
+      } else if(vida.d.emoji.name === ':two:') {
+        if(membro.roles.cache.get(proplayer)) return;
+        membro.roles.add(proplayer);
+      }else if(vida.d.emoji.name === ':three:') {
+        if(membro.roles.cache.get(noob)) return;
+        membro.roles.add(noob);
+      }else if(vida.d.emoji.name === ':four:') {
+        if(membro.roles.cache.get(egirl)) return;
+        membro.roles.add(egirl);
+      }else if(vida.d.emoji.name === ':five:') {
+        if(membro.roles.cache.get(tiltado)) return;
+        membro.roles.add(tiltado);
+      }else if(vida.d.emoji.name === ':six:') {
+        if(membro.roles.cache.get(sempreon)) return;
+        membro.roles.add(sempreon);
+      }else if(vida.d.emoji.name === ':seven:') {
+        if(membro.roles.cache.get(estudante)) return;
+        membro.roles.add(estudante);
+      }else if(vida.d.emoji.name === ':two:') {
+        if(membro.roles.cache.get(proplayer)) return;
+        membro.roles.add(proplayer);
+      }else if(vida.d.emoji.name === ':two:') {
+        if(membro.roles.cache.get(proplayer)) return;
+        membro.roles.add(proplayer);
+      }else if(vida.d.emoji.name === ':two:') {
+        if(membro.roles.cache.get(proplayer)) return;
+        membro.roles.add(proplayer);
+      }
+    }
+
+    if(vida.t === 'MESSAGE_REACTION_REMOVE') {
+      if(vida.d.emoji.name === ':one:') {
+        if(membro.roles.cache.get(gado)) return;
+        membro.roles.remove(gado);
+      } else if(vida.d.emoji.name === '🤡') {
+        if(membro.roles.cache.get(golpe)) return;
+        membro.roles.remove(golpe);
+      }
+    }
+  } catch (err) {
+    console.log('Erro: '+ err);
+  }
+});*/
+
 // Monitoramento do chat para o bot responder aos comandos
 client.on('message', message => {
+  
+  // Verifica se a msg do user foi no canal CORES
+  if(message.channel.id === '823658012500688968') {
+    // Ignora as mensagens do próprio bot
+    if(message.author.bot) return;
+
+    if(!message.content.startsWith(prefix)) {
+      // Apaga o comando do usuário
+      message.delete().catch(O_o => { })
+      // Avisa que não podes escrever ali.
+      return message.reply('Não pode escrever isso aqui').then(msg => msg.delete({ timeout: 2500 }));
+    }
+    
+    const args = message.content.slice(prefix.length).trim().split(/ +/);
+    const commandName = args.shift().toLowerCase();
+
+    const command = client.commands.get(commandName)
+      || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
+
+    if (!command) {
+      message.delete().catch(O_o => { });
+      return;
+    }
+  }
+
   if (!message.content.startsWith(prefix) || message.author.bot) return;
 
   const args = message.content.slice(prefix.length).trim().split(/ +/);
   const commandName = args.shift().toLowerCase();
+
 
   const command = client.commands.get(commandName)
     || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));

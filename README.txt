@@ -1,6 +1,6 @@
 
 ===================== EXEMPLE COMMAND ==========================
-module.exports{
+module.exports = {
 name
 aliases
 description
